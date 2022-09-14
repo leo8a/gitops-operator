@@ -1,0 +1,6 @@
+---
+# Setup/install tasks
+- include_tasks: install-gitops-olm.yml
+
+# Check GitOps installation
+- include_tasks: check-gitops-install.yml

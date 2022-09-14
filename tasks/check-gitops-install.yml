@@ -1,0 +1,20 @@
+---
+- name: Check GitOps Operator (presence of deployments -> timeout ~20 mins)
+  k8s:
+    api_version: apps/v1
+    kind: Deployment
+    name: "{{ item }}"
+    namespace: openshift-gitops
+    state: present
+    wait: true
+    wait_timeout: 120
+  loop:
+    - openshift-gitops-redis
+    - openshift-gitops-server
+    - openshift-gitops-repo-server
+    - openshift-gitops-dex-server
+    - openshift-gitops-applicationset-controller
+  register: gitops_deploy
+  retries: 10
+  delay: 30
+  until: gitops_deploy is not failed
