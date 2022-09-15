@@ -2,5 +2,6 @@
 # Setup/install tasks
 - include_tasks: install-gitops-olm.yml
 
-# Check GitOps installation
-- include_tasks: check-gitops-install.yml
+# Configure GitOps for Telco ZTO
+- include_tasks: configure-telco-ztp.yml
+  when: gitops["enable_telco_ztp"] is true

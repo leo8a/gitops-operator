@@ -1,0 +1,15 @@
+---
+- name: Get patches from openshift-kni/cnf-features-deploy repo
+  uri:
+    url: https://raw.githubusercontent.com/openshift-kni/cnf-features-deploy/master/ztp/gitops-subscriptions/argocd/deployment/argocd-openshift-gitops-patch.json
+    return_content: yes
+  register: argocd_openshift_gitops_patch
+
+- name: Patch GitOps operator
+  k8s:
+    api_version: argoproj.io/v1alpha1
+    kind: ArgoCD
+    name: openshift-gitops
+    namespace: openshift-gitops
+    resource_definition: "{{ argocd_openshift_gitops_patch.json }}"
+    merge_type: merge

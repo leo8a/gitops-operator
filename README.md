@@ -8,7 +8,8 @@ Installs the [GitOps](https://github.com/redhat-developer/gitops-operator.git) o
 
 Available variables are listed below, along with default values (see `defaults/main.yml`):
 
-    catalog_source: "redhat-operators"
+    gitops:
+      enable_telco_ztp: no
 
 ## Dependencies
 
@@ -21,14 +22,15 @@ This role requires the `kubernetes.core` collection, and have been tested on an 
       roles:
         - leo8a.gitops_operator
 
-For disconnected environments, the `catalog_source` var can be adjusted as follows:
+To patch GitOps operator for Telco ZTP, the `enable_telco_ztp` var can be adjusted as follows:
 
     - hosts: localhost
       gather_facts: false
       roles:
         - leo8a.gitops_operator
       vars:
-        - catalog_source: "redhat-operator-index"
+        - gitops:
+            enable_telco_ztp: yes
 
 ## License
 
